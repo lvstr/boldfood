@@ -2,6 +2,7 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:boldfood/utils/palette.dart';
 import 'package:boldfood/elements/category.dart';
+import 'package:boldfood/model/foods_model.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -14,20 +15,6 @@ class _Home extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0.0,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.shopping_basket_outlined,
-                color: Colors.black,
-              ),
-              onPressed: () {},
-            )
-          ],
-          iconTheme: IconThemeData(color: Colors.black),
-        ),
         drawer: Drawer(),
         bottomNavigationBar: BottomNavyBar(
           showElevation: false,
@@ -65,45 +52,76 @@ class _Home extends State<Home> {
                 inactiveColor: Color(0xFFBABABA)),
           ],
         ),
-        body: SingleChildScrollView(
-            child: Column(children: [
-          Container(
-            margin: EdgeInsets.only(right: 30.0, left: 30.0, top: 30.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Search",
-                filled: true,
-                fillColor: Color(0xFFF6F7FB),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () => {},
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFE0E0E0)),
-                    borderRadius: BorderRadius.all(Radius.circular(13.0))),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
-                    borderRadius: BorderRadius.all(Radius.circular(13.0))),
-              ),
+        body: CustomScrollView(
+          physics: ScrollPhysics(),
+          slivers: <Widget>[
+            SliverAppBar(
+              backgroundColor: Colors.white,
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.shopping_basket_outlined,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {},
+                )
+              ],
+              iconTheme: IconThemeData(color: Colors.black),
             ),
-          ),
-          Category(),
-          Container(
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(left: 30.0),
-              child: Text("Popular Food",
-                  style: TextStyle(
-                      fontSize: 30, height: 2.5, fontWeight: FontWeight.w900))),
-                      FoodList(),
-                      FoodList(),
-                      FoodList(),
-                      FoodList(),
-                      FoodList(),
-        ])));
+            SliverList(
+                delegate: SliverChildListDelegate([
+              Column(children: [
+                Container(
+                  margin: EdgeInsets.only(right: 30.0, left: 30.0, top: 30.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Search",
+                      filled: true,
+                      fillColor: Color(0xFFF6F7FB),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () => {},
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFE0E0E0)),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(13.0))),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.transparent),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(13.0))),
+                    ),
+                  ),
+                ),
+                Category(),
+                Container(
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.only(left: 30.0),
+                    child: Text("Popular Food",
+                        style: TextStyle(
+                            fontSize: 30,
+                            height: 2.5,
+                            fontWeight: FontWeight.w900))),
+                ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(onTap: () {}, child: FoodList(foods[index]));
+                  },
+                  itemCount: foods.length,
+                )
+              ])
+            ]))
+          ],
+        ));
   }
 }
 
 class FoodList extends StatelessWidget {
+  final Foods food;
+
+  FoodList(this.food);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -118,15 +136,51 @@ class FoodList extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
           ),
         ),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 30.0),
-          alignment: FractionalOffset.centerLeft,
-          child: Image(
-            image: AssetImage("images/foods/pizza.png"),
-            height: 92.0,
-            width: 180.0,
+        Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+          Container(
+            margin:
+                EdgeInsets.only(top: 30.0, bottom: 30.0, left: 40, right: 18),
+            alignment: FractionalOffset.centerLeft,
+            child: Image(
+              image: AssetImage(food.imageIcon),
+              height: 92.0,
+            ),
           ),
-        ),
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(food.name,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    )),
+                Text(food.title,
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFFA4A4A4))),
+                Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: Text("IDR ${food.price}",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)))
+              ],
+            ),
+          ),
+        ]),
+        Container(
+            margin: EdgeInsets.fromLTRB(280, 70, 0, 0),
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 45.0,
+              ),
+              style: ElevatedButton.styleFrom(
+                  shape: CircleBorder(), primary: Palette.theme),
+            )),
       ],
     ));
   }

@@ -4,7 +4,7 @@ class Foods {
   String title;
   String imageIcon;
   String imageBig;
-  num price;
+  String price;
 
   Foods({
     required this.name,
@@ -16,77 +16,61 @@ class Foods {
   });
 }
 
-var foodsList = [
+List<Foods> foods = [
   Foods(
-    name: 'Farm House Lembang',
+    name: 'Pizza',
     description: "Our very own! Smashed Burger",
     title: "Delicious Food 2020",
     imageIcon: 'images/foods/pizza.png',
     imageBig: 'images/tes.jpg',
-    price: 12000,
+    price: "49.999",
   ),
   Foods(
-    name: 'Observatorium Bosscha',
+    name: 'Hamburger',
     description: "Our very own! Smashed Burger",
     title: "Delicious Food 2020",
-    imageIcon: 'images/foods/pizza.png',
+    imageIcon: 'images/foods/hamburger.png',
     imageBig: 'images/tes.jpg',
-    price: 12000,
+    price: "59.999",
   ),
   Foods(
-    name: 'Jalan Asia Afrika',
+    name: 'Double Hot Dog',
     description: "Our very own! Smashed Burger",
     title: "Delicious Food 2020",
-    imageIcon: 'images/foods/pizza.png',
+    imageIcon: 'images/foods/doublehotdog.png',
     imageBig: 'images/tes.jpg',
-    price: 12000,
+    price: "12.000",
   ),
   Foods(
-    name: 'Stone Garden',
+    name: 'Pasta Crunchy',
     description: "Our very own! Smashed Burger",
     title: "Delicious Food 2020",
     imageIcon: 'images/foods/pizza.png',
     imageBig: 'images/tes.jpg',
-    price: 12000,
+    price: "12.000",
   ),
   Foods(
-    name: 'Taman Film Pasopati',
+    name: 'Menantea',
     description: "Our very own! Smashed Burger",
-    title: "Delicious Food 2020",
+    title: "Top 2021",
     imageIcon: 'images/foods/pizza.png',
     imageBig: 'images/tes.jpg',
-    price: 12000,
+    price: "12.000",
   ),
   Foods(
-    name: 'Museum Geologi',
+    name: 'Es Teh Hangat',
     description: "Our very own! Smashed Burger",
     title: "Delicious Food 2020",
     imageIcon: 'images/foods/pizza.png',
     imageBig: 'images/tes.jpg',
-    price: 12000,
+    price: "34.999",
   ),
   Foods(
-    name: 'Floating Market',
+    name: 'Gorengan Sultan',
     description: "Our very own! Smashed Burger",
     title: "Delicious Food 2020",
     imageIcon: 'images/foods/pizza.png',
     imageBig: 'images/tes.jpg',
-    price: 12000,
-  ),
-  Foods(
-    name: 'Kawah Putih',
-    description: "Our very own! Smashed Burger",
-    title: "Delicious Food 2020",
-    imageIcon: 'images/foods/pizza.png',
-    imageBig: 'images/tes.jpg',
-    price: 12000,
-  ),
-  Foods(
-    name: 'Ranca Upas',
-    description: "Our very own! Smashed Burger",
-    title: "Delicious Food 2020",
-    imageIcon: 'images/foods/pizza.png',
-    imageBig: 'images/tes.jpg',
-    price: 12000,
+    price: "12.000",
   ),
 ];
