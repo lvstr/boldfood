@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'utils/palette.dart'; 
-import 'pages/home.dart'; 
+import 'utils/palette.dart';
+import 'pages/home.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,4 +20,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
