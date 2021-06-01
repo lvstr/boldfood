@@ -1,6 +1,6 @@
 {
-    "name": "foodu",
-    "short_name": "foodu",
+    "name": "Boldfood",
+    "short_name": "Boldfood",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,4 +1,4 @@
-# foodu
+# boldfood
 
 A new Flutter project.
 

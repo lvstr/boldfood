@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.foodu">
+    package="com.lvstr.boldfood">
    <application
-        android:label="foodu"
+        android:label="Boldfood"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
