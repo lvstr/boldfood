@@ -230,7 +230,8 @@ class _Category extends State<Category> {
                                   ),
                                 ]),
                             Container(
-                                margin: EdgeInsets.fromLTRB(295, 75, 0, 0),
+                                margin: EdgeInsets.only(top: 75, right: 35),
+                                alignment: Alignment.bottomRight,
                                 child: ElevatedButton(
                                   onPressed: () {},
                                   child: Icon(
@@ -320,7 +321,8 @@ class _Category extends State<Category> {
                                       ),
                                     ]),
                                 Container(
-                                    margin: EdgeInsets.fromLTRB(295, 75, 0, 0),
+                                    margin: EdgeInsets.only(top: 75, right: 35),
+                                    alignment: Alignment.bottomRight,
                                     child: ElevatedButton(
                                       onPressed: () {},
                                       child: Icon(
@@ -418,7 +420,8 @@ class _Category extends State<Category> {
                                         ]),
                                     Container(
                                         margin:
-                                            EdgeInsets.fromLTRB(295, 75, 0, 0),
+                                            EdgeInsets.only(top: 75, right: 35),
+                                        alignment: Alignment.bottomRight,
                                         child: ElevatedButton(
                                           onPressed: () {},
                                           child: Icon(
@@ -515,7 +518,8 @@ class _Category extends State<Category> {
                                         ]),
                                     Container(
                                         margin:
-                                            EdgeInsets.fromLTRB(295, 75, 0, 0),
+                                            EdgeInsets.only(top: 75, right: 35),
+                                        alignment: Alignment.bottomRight,
                                         child: ElevatedButton(
                                           onPressed: () {},
                                           child: Icon(
