@@ -2,9 +2,9 @@ import 'package:boldfood/model/foods_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:boldfood/utils/palette.dart';
-import 'package:boldfood/elements/item_count.dart';
-import 'package:boldfood/elements/size_button.dart';
-import 'package:boldfood/elements/favorite_button.dart';
+import 'package:boldfood/widgets/item_count.dart';
+import 'package:boldfood/widgets/size_button.dart';
+import 'package:boldfood/widgets/favorite_button.dart';
 
 class DetailPage extends StatelessWidget {
   final Food food;
@@ -53,7 +53,7 @@ class DetailPage extends StatelessWidget {
           ],
         ),
         Container(
-            margin: EdgeInsets.only(left: 30, top: 30),
+            margin: EdgeInsets.only(left: 30, top: 30, right: 30),
             child: Text(
               "${food.name}",
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),

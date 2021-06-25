@@ -1,10 +1,12 @@
-import 'package:boldfood/elements/custom_appbar.dart';
+import 'package:boldfood/widgets/custom_appbar.dart';
+import 'package:boldfood/pages/comingsoon.dart';
 import 'package:boldfood/pages/detail.dart';
 import 'package:flutter/material.dart';
 import 'package:boldfood/utils/palette.dart';
-import 'package:boldfood/elements/bottom_navbar.dart';
-import 'package:boldfood/elements/category.dart';
+import 'package:boldfood/widgets/bottom_navbar.dart';
+import 'package:boldfood/widgets/category.dart';
 import 'package:boldfood/model/foods_model.dart';
+import 'package:flutter/services.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -33,10 +35,118 @@ class _Home extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Drawer(),
+        drawer: Drawer(
+            child: ListView(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(top: 30),
+              child: Center(
+                child: Container(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(100.0),
+                    child: Image(
+                      image: AssetImage('./images/profile.jpg'),
+                      height: 130.0,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 30, bottom: 10),
+              child: Center(
+                child: Container(
+                    child: Text("John Doe",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold))),
+              ),
+            ),
+            Divider(
+              color: Palette.theme,
+              thickness: 1,
+            ),
+            Container(
+              child: ListTile(
+                leading: Icon(Icons.home),
+                title: Text('Home'),
+                onTap: () {
+                  _update(0);
+                  CustomAppBar.pageController.jumpToPage(0);
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            Container(
+              child: ListTile(
+                leading: Icon(Icons.notifications),
+                title: Text('Notifications'),
+                onTap: () {
+                  _update(1);
+                  CustomAppBar.pageController.jumpToPage(1);
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            Container(
+              child: ListTile(
+                leading: Icon(Icons.favorite),
+                title: Text('Favorite'),
+                onTap: () {
+                  _update(2);
+                  CustomAppBar.pageController.jumpToPage(2);
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            Container(
+              child: ListTile(
+                leading: Icon(Icons.account_circle_rounded),
+                title: Text('Account'),
+                onTap: () {
+                  _update(3);
+                  CustomAppBar.pageController.jumpToPage(3);
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            Divider(
+              color: Palette.theme,
+              thickness: 1,
+            ),
+            Container(
+              child: ListTile(
+                  leading: Icon(Icons.exit_to_app),
+                  title: Text('Log Out'),
+                  onTap: () => showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: Text("Are you sure?"),
+                          content: Text("You will Exit this App!"),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: (() {
+                                Navigator.pop(context, 'OK');
+                                setState(() {
+                                  SystemChannels.platform
+                                      .invokeMethod('SystemNavigator.pop');
+                                });
+                              }),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      )),
+            ),
+          ],
+        )),
         bottomNavigationBar:
             BottomNaviBar(currentIndex: _update, index: _currentIndex),
-        body: CustomAppBar(currentIndex: _update));
+        body: CustomAppBar(currentIndex: _update, index: _currentIndex));
   }
 }
 
@@ -94,11 +204,11 @@ class NotificationPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text("Your Food is coming..",
+                        Text("Your Food has been arrived..",
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: Colors.orange)),
+                                color: Palette.theme)),
                         Text("Driver: Mr. Sudono",
                             style: TextStyle(
                                 fontSize: 14,
@@ -110,7 +220,7 @@ class NotificationPage extends StatelessWidget {
                             child: FittedBox(
                                 fit: BoxFit.fitWidth,
                                 child: Text(
-                                    "Hey! Your food Pizza Hot is coming, please wait and Wear mask! ",
+                                    "Hey! Your food Pizza Hot has been arrived, please pay and Wear mask! ",
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500))))
@@ -137,11 +247,11 @@ class NotificationPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text("Your Food has been arrived..",
+                        Text("Your Food is coming..",
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: Palette.theme)),
+                                color: Colors.orange)),
                         Text("Driver: Mr. Sudono",
                             style: TextStyle(
                                 fontSize: 14,
@@ -153,7 +263,7 @@ class NotificationPage extends StatelessWidget {
                             child: FittedBox(
                                 fit: BoxFit.fitWidth,
                                 child: Text(
-                                    "Hey! Your food Pizza Hot has been arrived, please pay and Wear mask! ",
+                                    "Hey! Your food Pizza Hot is coming, please wait and Wear mask! ",
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500))))
@@ -199,13 +309,16 @@ class NotificationPage extends StatelessWidget {
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500)))),
-                        Text("Reason:",
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFFA4A4A4))),
                         Container(
-                            margin: EdgeInsets.only(top: 10, right: 10),
+                          margin: EdgeInsets.only(top: 10),
+                          child: Text("Reason:",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xFFA4A4A4))),
+                        ),
+                        Container(
+                            margin: EdgeInsets.only(top: 5, right: 10),
                             child: FittedBox(
                                 fit: BoxFit.fitWidth,
                                 child: Text("Out of Stock!",
@@ -360,75 +473,262 @@ class EmptyFavoritePage extends StatelessWidget {
   }
 }
 
+class Buildd extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+              margin: EdgeInsets.only(top: 30),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ComingSoon();
+                    }));
+                  },
+                  child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      margin: EdgeInsets.only(right: 30, left: 30),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              child: Icon(
+                                Icons.account_circle_rounded,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                              flex: 11,
+                              child: Container(
+                                  margin: EdgeInsets.only(left: 15),
+                                  child: Text("Edit Profile",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600)))),
+                          Expanded(
+                              child: Container(
+                                  alignment: Alignment.centerRight,
+                                  child: Icon(Icons.navigate_next)))
+                        ],
+                      ))));
+        });
+  }
+}
+
 class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class ListSearch extends StatefulWidget {
-  ListSearchState createState() => ListSearchState();
-}
-
-class ListSearchState extends State<ListSearch> {
-  TextEditingController _textController = TextEditingController();
-  static List<String> mainDataList = [
-    foods[foods.length].name,
-    deserts[deserts.length].name,
-    drinks[drinks.length].name,
-    snacks[snacks.length].name
-  ];
-
-  // Copy Main List into New List.
-  List<String> newDataList = List.from(mainDataList);
-
-  onItemChanged(String value) {
-    setState(() {
-      newDataList = mainDataList
-          .where((string) => string.toLowerCase().contains(value.toLowerCase()))
-          .toList();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: TextField(
-            controller: _textController,
-            decoration: InputDecoration(
-              hintText: "Search",
-              filled: true,
-              fillColor: Color(0xFFF6F7FB),
-              suffixIcon: IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () => {},
+    return Container(
+        child: ListView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+          Center(
+            child: Container(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100.0),
+                child: Image(
+                  image: AssetImage('./images/profile.jpg'),
+                  height: 150.0,
+                  fit: BoxFit.fill,
+                ),
               ),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFE0E0E0)),
-                  borderRadius: BorderRadius.all(Radius.circular(13.0))),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.transparent),
-                  borderRadius: BorderRadius.all(Radius.circular(13.0))),
             ),
-            onChanged: onItemChanged,
           ),
-        ),
-        Expanded(
-          child: ListView(
-            padding: EdgeInsets.all(12.0),
-            children: newDataList.map((data) {
-              return ListTile(
-                title: Text(data),
-                onTap: () => print(data),
-              );
-            }).toList(),
-          ),
-        )
-      ],
-    );
+          Center(
+              child: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: Text("John Doe",
+                      style: TextStyle(
+                          fontSize: 30, fontWeight: FontWeight.bold)))),
+          Container(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                Container(
+                    margin: EdgeInsets.only(top: 30),
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return ComingSoon();
+                          }));
+                        },
+                        child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            margin: EdgeInsets.only(right: 30, left: 30),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    child: Icon(
+                                      Icons.account_circle_rounded,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                    flex: 11,
+                                    child: Container(
+                                        margin: EdgeInsets.only(left: 15),
+                                        child: Text("Edit Profile",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w600)))),
+                                Expanded(
+                                    child: Container(
+                                        alignment: Alignment.centerRight,
+                                        child: Icon(Icons.navigate_next)))
+                              ],
+                            )))),
+                Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return ComingSoon();
+                          }));
+                        },
+                        child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            margin: EdgeInsets.only(left: 30, right: 30),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    child: Icon(
+                                      Icons.map_outlined,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                    flex: 11,
+                                    child: Container(
+                                        margin: EdgeInsets.only(left: 15),
+                                        child: Text("Shipping Address",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w600)))),
+                                Expanded(
+                                    child: Container(
+                                        alignment: Alignment.centerRight,
+                                        child: Icon(Icons.navigate_next)))
+                              ],
+                            )))),
+                Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return ComingSoon();
+                          }));
+                        },
+                        child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            margin: EdgeInsets.only(left: 30, right: 30),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    child: Icon(
+                                      Icons.favorite_border_outlined,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                    flex: 11,
+                                    child: Container(
+                                        margin: EdgeInsets.only(left: 15),
+                                        child: Text("Wishlist",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w600)))),
+                                Expanded(
+                                    child: Container(
+                                        alignment: Alignment.centerRight,
+                                        child: Icon(Icons.navigate_next)))
+                              ],
+                            )))),
+                Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return ComingSoon();
+                          }));
+                        },
+                        child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            margin: EdgeInsets.only(left: 30, right: 30),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    child: Icon(
+                                      Icons.timelapse,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                    flex: 11,
+                                    child: Container(
+                                        margin: EdgeInsets.only(left: 15),
+                                        child: Text("Order History",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w600)))),
+                                Expanded(
+                                  child: Container(
+                                      alignment: Alignment.centerRight,
+                                      child: Icon(Icons.navigate_next)),
+                                )
+                              ],
+                            )))),
+                Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return ComingSoon();
+                          }));
+                        },
+                        child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            margin: EdgeInsets.only(left: 30, right: 30),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    child: Icon(
+                                      Icons.credit_card,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 11,
+                                  child: Container(
+                                      margin: EdgeInsets.only(left: 15),
+                                      child: Text("Payment",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600))),
+                                ),
+                                Expanded(
+                                    child: Container(
+                                        alignment: Alignment.centerRight,
+                                        child: Icon(Icons.navigate_next)))
+                              ],
+                            )))),
+              ]))
+        ]));
   }
 }

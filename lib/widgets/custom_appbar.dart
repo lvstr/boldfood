@@ -1,18 +1,18 @@
+import 'package:boldfood/pages/comingsoon.dart';
 import 'package:boldfood/pages/home.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget {
   final ValueChanged<int> currentIndex;
-  CustomAppBar({required this.currentIndex});
+
+  final int index;
+  CustomAppBar({required this.currentIndex, required this.index});
   static late PageController pageController;
   @override
-  _CustomAppBar createState() => _CustomAppBar(currentIndex: currentIndex);
+  _CustomAppBar createState() => _CustomAppBar();
 }
 
 class _CustomAppBar extends State<CustomAppBar> {
-  final ValueChanged<int> currentIndex;
-  _CustomAppBar({required this.currentIndex});
-  int _currentIndex = 0;
   bool isNotificationEmpty = false;
   bool isFavoriteEmpty = false;
 
@@ -27,7 +27,7 @@ class _CustomAppBar extends State<CustomAppBar> {
             sliver: SliverAppBar(
               backgroundColor: Colors.white,
               actions: <Widget>[
-                _currentIndex == 1 || _currentIndex == 2
+                widget.index == 1 || widget.index == 2
                     ? IconButton(
                         icon: Icon(
                           Icons.delete,
@@ -36,9 +36,9 @@ class _CustomAppBar extends State<CustomAppBar> {
                         onPressed: () => showDialog<String>(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
-                            title: Text(_currentIndex == 1
+                            title: Text(widget.index == 1
                                 ? 'Delete Notificaitons?'
-                                : _currentIndex == 2
+                                : widget.index == 2
                                     ? 'Delete Favorite?'
                                     : ''),
                             content:
@@ -53,9 +53,9 @@ class _CustomAppBar extends State<CustomAppBar> {
                                 onPressed: (() {
                                   Navigator.pop(context, 'OK');
                                   setState(() {
-                                    _currentIndex == 1
+                                    widget.index == 1
                                         ? isNotificationEmpty = true
-                                        : _currentIndex == 2
+                                        : widget.index == 2
                                             ? isFavoriteEmpty = true
                                             : isFavoriteEmpty = true;
                                   });
@@ -67,20 +67,30 @@ class _CustomAppBar extends State<CustomAppBar> {
                         ),
                       )
                     : Container(),
-                _currentIndex == 1 || _currentIndex == 2
+                widget.index == 1 || widget.index == 2
                     ? IconButton(
                         icon: Icon(
                           Icons.shopping_basket_outlined,
                           color: Colors.black,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return ComingSoon();
+                          }));
+                        },
                       )
                     : IconButton(
                         icon: Icon(
                           Icons.shopping_basket_outlined,
                           color: Colors.black,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return ComingSoon();
+                          }));
+                        },
                       ),
               ],
               iconTheme: IconThemeData(color: Colors.black),
@@ -93,8 +103,7 @@ class _CustomAppBar extends State<CustomAppBar> {
             controller: CustomAppBar.pageController,
             onPageChanged: (index) {
               setState(() {
-                currentIndex(index);
-                _currentIndex = index;
+                widget.currentIndex(index);
               });
             },
             children: <Widget>[

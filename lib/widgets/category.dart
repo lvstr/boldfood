@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:boldfood/utils/palette.dart';
 import 'package:boldfood/model/foods_model.dart';
 import 'package:boldfood/pages/detail.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Category extends StatefulWidget {
   @override
@@ -146,7 +147,7 @@ class _Category extends State<Category> {
               alignment: Alignment.topLeft,
               margin: EdgeInsets.only(left: 30.0, top: 30),
               child: Text(
-                  'Popular ${isSelected[0] ? "Fast Food" : isSelected[1] ? "Desert" : isSelected[2] ? "Drinks" : isSelected[3] ? "Snacks" : "Snacks"}',
+                  'Popular ${isSelected[0] ? "Fast Food" : isSelected[1] ? "Dessert" : isSelected[2] ? "Drinks" : isSelected[3] ? "Snacks" : "Snacks"}',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900))),
           ListView.builder(
             physics: NeverScrollableScrollPhysics(),
@@ -154,7 +155,7 @@ class _Category extends State<Category> {
             itemCount: isSelected[0]
                 ? foods.length
                 : isSelected[1]
-                    ? deserts.length
+                    ? desserts.length
                     : isSelected[2]
                         ? drinks.length
                         : isSelected[3]
@@ -196,7 +197,7 @@ class _Category extends State<Category> {
                                       alignment: FractionalOffset.centerLeft,
                                       child: ClipRRect(
                                         borderRadius:
-                                            new BorderRadius.circular(50.0),
+                                            BorderRadius.circular(100.0),
                                         child: Image(
                                           image: AssetImage(food.imageIcon),
                                           height: 92.0,
@@ -233,7 +234,13 @@ class _Category extends State<Category> {
                                 margin: EdgeInsets.only(top: 75, right: 35),
                                 alignment: Alignment.bottomRight,
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Fluttertoast.showToast(
+                                      msg: "Coming Soon :)",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                    );
+                                  },
                                   child: Icon(
                                     Icons.add,
                                     color: Colors.white,
@@ -249,7 +256,7 @@ class _Category extends State<Category> {
                   }
                 : isSelected[1]
                     ? (BuildContext context, int index) {
-                        final Food desert = deserts[index];
+                        final Food desert = desserts[index];
 
                         return InkWell(
                             onTap: () {
@@ -284,7 +291,7 @@ class _Category extends State<Category> {
                                               FractionalOffset.centerLeft,
                                           child: ClipRRect(
                                             borderRadius:
-                                                new BorderRadius.circular(50.0),
+                                                BorderRadius.circular(100.0),
                                             child: Image(
                                               image:
                                                   AssetImage(desert.imageIcon),
@@ -324,7 +331,13 @@ class _Category extends State<Category> {
                                     margin: EdgeInsets.only(top: 75, right: 35),
                                     alignment: Alignment.bottomRight,
                                     child: ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Fluttertoast.showToast(
+                                          msg: "Coming Soon :)",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                        );
+                                      },
                                       child: Icon(
                                         Icons.add,
                                         color: Colors.white,
@@ -377,8 +390,8 @@ class _Category extends State<Category> {
                                                   FractionalOffset.centerLeft,
                                               child: ClipRRect(
                                                 borderRadius:
-                                                    new BorderRadius.circular(
-                                                        50.0),
+                                                    BorderRadius.circular(
+                                                        100.0),
                                                 child: Image(
                                                   image: AssetImage(
                                                       drink.imageIcon),
@@ -423,7 +436,13 @@ class _Category extends State<Category> {
                                             EdgeInsets.only(top: 75, right: 35),
                                         alignment: Alignment.bottomRight,
                                         child: ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Fluttertoast.showToast(
+                                              msg: "Coming Soon :)",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.CENTER,
+                                            );
+                                          },
                                           child: Icon(
                                             Icons.add,
                                             color: Colors.white,
@@ -475,8 +494,8 @@ class _Category extends State<Category> {
                                                   FractionalOffset.centerLeft,
                                               child: ClipRRect(
                                                 borderRadius:
-                                                    new BorderRadius.circular(
-                                                        50.0),
+                                                    BorderRadius.circular(
+                                                        100.0),
                                                 child: Image(
                                                   image: AssetImage(
                                                       snack.imageIcon),
@@ -521,7 +540,13 @@ class _Category extends State<Category> {
                                             EdgeInsets.only(top: 75, right: 35),
                                         alignment: Alignment.bottomRight,
                                         child: ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Fluttertoast.showToast(
+                                              msg: "Coming Soon :)",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.CENTER,
+                                            );
+                                          },
                                           child: Icon(
                                             Icons.add,
                                             color: Colors.white,
